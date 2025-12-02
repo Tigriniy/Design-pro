@@ -1,17 +1,18 @@
 {% extends "catalog/base_generic.html" %}
 
-{% block title %}Главная страница - Design.pro{% endblock %}
-
 {% block content %}
-<h2>Добро пожаловать в Design.pro!</h2>
-<p>Студия дизайна интерьеров жилых помещений.</p>
+<h2>Design.pro</h2>
+<p>Студия дизайна интерьеров.</p>
 
-<div>
-    <h3>Возможности:</h3>
+<div class="feature-card">
     <ul>
-        <li>Создание заявок на дизайн интерьера</li>
-        <li>Просмотр выполненных работ</li>
+        <li>Создание заявок</li>
+        <li>Просмотр работ</li>
         <li>Профессиональные дизайнеры</li>
     </ul>
 </div>
+
+{% if not user.is_authenticated %}
+    <p><a href="{% url 'register' %}" class="btn">Регистрация</a></p>
+{% endif %}
 {% endblock %}

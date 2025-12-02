@@ -14,10 +14,10 @@ class CustomUserCreationForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ('username', 'full_name', 'email', '<password1>', '<password2>', 'agree_to_terms')
+        fields = ('username', 'full_name', 'email', 'agree_to_terms')
 
         def clean_full_name(self):
-            """Проверка ФИО - только кириллица, дефис и пробелы"""
+
             full_name = self.cleaned_data['full_name']
             if not re.match(r'^[а-яА-ЯёЁ\s\-]+$', full_name):
                 raise forms.ValidationError('ФИО должно содержать только киррилические буквы, дефис и пробелы')
