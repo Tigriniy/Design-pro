@@ -1,13 +1,28 @@
 {% extends "catalog/base_generic.html" %}
 
 {% block content %}
-<h2>Вход</h2>
+<h2>Вход в систему</h2>
+
+{% if form.errors %}
+<div class="alert alert-danger">
+    <strong>Ошибка!</strong> Неверный логин или пароль.
+</div>
+{% endif %}
 
 <form method="post">
     {% csrf_token %}
-    <input type="text" name="username" placeholder="Логин" required>
-    <input type="password" name="password" placeholder="Пароль" required>
-    <button type="submit" class="btn">Войти</button>
-    <p><a href="{% url 'register' %}">Регистрация</a></p>
+
+    <div class="mb-3">
+        <label for="id_username" class="form-label">Логин</label>
+        <input type="text" name="username" id="id_username" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="id_password" class="form-label">Пароль</label>
+        <input type="password" name="password" id="id_password" class="form-control" required>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Войти</button>
+    <a href="{% url 'register' %}" class="btn btn-link">Регистрация</a>
 </form>
 {% endblock %}

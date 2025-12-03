@@ -14,11 +14,8 @@ def register(request):
         form = CustomUserCreationForm(request.POST)
 
         if form.is_valid():
-
             user = form.save()
-
             login(request, user)
-
         messages.success(request, 'регистрация прошла успешно!')
 
         return redirect('index')
@@ -28,9 +25,7 @@ def register(request):
     return render(request, 'catalog/register.html', {'form': form})
 
 def user_login(request):
-
     if request.method == 'POST':
-        """если пользователь отправил форму входа"""
         form=AuthenticationForm(request, data=request.POST)
 
         if form.is_valid():
@@ -39,7 +34,7 @@ def user_login(request):
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
 
-            #Проверяем правильность логина и пароля
+
             user = authenticate(username=username, password=password)
 
             if user is not None:
@@ -48,7 +43,7 @@ def user_login(request):
                 return redirect('index')
 
     else:
-        #если пользователь просто зашел на страницу входа
+
         form = AuthenticationForm()
 
     return render(request, 'catalog/login.html', {'form': form})

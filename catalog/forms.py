@@ -1,7 +1,8 @@
+import re
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-import re
+
 
 class CustomUserCreationForm(UserCreationForm):
 
@@ -24,7 +25,7 @@ class CustomUserCreationForm(UserCreationForm):
             return full_name
 
         def clean_username(self):
-            """Проверка логина - только латиница и дефис"""
+
             username = self.cleaned_data['username']
             if not re.match(r'^[a-zA-Z\-]+$', username):
                 raise forms.ValidationError('Логин должен содержать только латинские буквы и дефис')
