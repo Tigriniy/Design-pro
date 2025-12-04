@@ -68,6 +68,6 @@ class ApplicationForm(forms.ModelForm):
             if ext not in ['.jpg', '.jpeg', '.png', '.bmp']:
                 raise forms.ValidationError('разрешены только PG, JPEG, PNG, BMP.')
 
-            if photo.size > 2 * 1024:
+            if photo.size > 2 * 1024 * 1024:
                 raise forms.ValidationError('максимальный размер файла - 2 МБ.')
         return photo

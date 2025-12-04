@@ -1,6 +1,8 @@
+{% extends "catalog/base_generic.html" %}
+{% block content %}
+
 <h2>Мои заявки</h2>
 
-<!-- Фильтр по статусу -->
 <form method="get" class="mb-3">
     <label>Фильтр по статусу:</label>
     <select name="status" onchange="this.form.submit()">
@@ -20,7 +22,11 @@
             <p>{{ app.description|truncatewords:20 }}</p>
             <p><strong>Категория:</strong> {{ app.category }}</p>
             <p><strong>Статус:</strong>
-                <span class="badge bg-{{ app.status == 'выполнено'|yesno:'success,warning,info' }}">
+                <span class="badge
+                    {% if app.status == 'выполнено' %}bg-success
+                    {% elif app.status == 'в работе' %}bg-warning
+                    {% else %}bg-info
+                    {% endif %}">
                     {{ app.get_status_display }}
                 </span>
             </p>
@@ -36,3 +42,4 @@
 {% else %}
     <p>Заявок нет.</p>
 {% endif %}
+{% endblock %}

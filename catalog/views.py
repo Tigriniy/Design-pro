@@ -60,7 +60,7 @@ def profile(request):
 class ApplicationCreateView(LoginRequiredMixin, CreateView):
     model = Application
     form_class = ApplicationForm
-    template_name = 'catalog/application_create.html'
+    template_name = 'catalog/application_form.html'
     success_url = reverse_lazy('my_applications')
 
     def form_valid(self, form):
