@@ -1,0 +1,51 @@
+{% extends "catalog/base_generic.html" %}
+
+{% block content %}
+<h2>Админка: Все заявки</h2>
+
+<div class="filter-form">
+    <form method="get">
+        <label>Фильтр по статусу:</label>
+        <select name="status" onchange="this.form.submit()">
+            <option value="">Все</option>
+            <option value="новая" {% if selected_status == 'новая' %}selected{% endif %}>Новая</option>
+            <option value="в работе" {% if selected_status == 'в работе' %}selected{% endif %}>Принято в работу</option>
+            <option value="выполнено" {% if selected_status == 'выполнено' %}selected{% endif %}>Выполнено</option>
+        </select>
+    </form>
+</div>
+
+{% if applications %}
+    {% for app in applications %}
+        <div class="application-card">
+            <h4>{{ app.title }} ({{ app.user.profile.full_name|default:app.user.username }})</h4>
+            <p><strong>Категория:</strong> {{ app.category }}</p>
+            <p><strong>Статус:</strong>
+                <span class="status-badge status-{{ app.status|slugify }}">{{ app.get_status_display }}</span>
+            </p>
+            <p>{{ app.description|truncatewords:20 }}</p>
+            
+            {% if app.status == 'новая' %}
+            <form method="post" style="display:inline;">
+                {% csrf_token %}
+                <input type="hidden" name="app_id" value="{{ app.id }}">  <!-- ← КЛЮЧЕВОЕ -->
+                <input type="hidden" name="status" value="в работе">
+                <input type="hidden" name="action" value="change_status">
+                <button type="submit" class="btn btn-sm btn-warning">Принять в работу</button>
+            </form>
+            {% elif app.status == 'в работе' %}
+            <!-- Для заявок со статусом "в работе" -->
+            <form method="post" style="display:inline;">
+                {% csrf_token %}
+                <input type="hidden" name="app_id" value="{{ app.id }}">  <!-- ← КЛЮЧЕВОЕ -->
+                <input type="hidden" name="status" value="выполнено">
+                <input type="hidden" name="action" value="change_status">
+                <button type="submit" class="btn btn-sm btn-success">Выполнить</button>
+            </form>
+            {% endif %}
+        </div>
+    {% endfor %}
+{% else %}
+    <p>Заявок нет.</p>
+{% endif %}
+{% endblock %}

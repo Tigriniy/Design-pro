@@ -1,11 +1,14 @@
-from django.shortcuts import render, redirect
+from gc import get_objects
+
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.views.generic import CreateView, ListView, DeleteView
 from django.urls import reverse_lazy
 from django.contrib.auth.views import LogoutView
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
+from .forms import CategoryForm
 
 from .forms import CustomUserCreationForm, ApplicationForm, Category
 from .models import Application
@@ -99,3 +102,78 @@ class ApplicationDeleteView(LoginRequiredMixin, DeleteView):
             user=self.request.user,
             status='новая'
         )
+
+
+def is_admin(user):
+    return user.is_staff
+
+
+@user_passes_test(is_admin)
+def admin_applications(request):
+    qs = Application.objects.all().select_related('user', 'category')
+    status = request.GET.get('status')
+    if status in ['новая', 'в работе', 'выполнено']:
+        qs = qs.filter(status=status)
+
+    # Обработка POST: смена статуса
+    if request.method == 'POST' and request.POST.get('action') == 'change_status':
+        app_id = request.POST.get('app_id')
+        if not app_id:
+            messages.error(request, 'Не указана заявка для изменения')
+            return redirect('admin_applications')
+        new_status = request.POST.get('status')
+        app = get_object_or_404(Application, id=app_id)
+        app.status = new_status
+        app.save()
+        messages.success(request, f'Статус заявки «{app.title}» изменён на «{app.get_status_display()}»')
+        return redirect('admin_applications')
+
+    return render(request, 'catalog/admin_applications.html', {
+        'applications': qs,
+        'selected_status': status,
+    })
+
+
+@user_passes_test(is_admin)
+def admin_categories(request):
+    categories = Category.objects.all()
+    return render(request, 'catalog/admin_categories.html', {'categories': categories})
+
+
+@user_passes_test(is_admin)
+def admin_category_create(request):
+    if request.method == 'POST':
+        form = CategoryForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Категория добавлена')
+            return redirect('admin_categories')
+    else:
+        form = CategoryForm()
+    return render(request, 'catalog/admin_category_form.html', {'form': form})
+
+
+@user_passes_test(is_admin)
+def admin_category_edit(request, pk):
+    category = get_object_or_404(Category, pk=pk)
+    if request.method == 'POST':
+        form = CategoryForm(request.POST, instance=category)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Категория обновлена')
+            return redirect('admin_categories')
+    else:
+        form = CategoryForm(instance=category)
+    return render(request, 'catalog/admin_category_form.html', {'form': form, 'category': category})
+
+
+@user_passes_test(is_admin)
+def admin_category_delete(request, pk):
+    category = get_object_or_404(Category, pk=pk)
+    if request.method == 'POST':
+        name = category.name
+        count = category.application_set.count()
+        category.delete()  # ← CASCADE удалит все заявки!
+        messages.success(request, f'Категория «{name}» и {count} заявок удалены')
+        return redirect('admin_categories')
+    return render(request, 'catalog/admin_category_confirm_delete.html', {'object': category})

@@ -2,19 +2,18 @@
 
 {% block content %}
 <h2>Личный кабинет</h2>
-
 <p>Добро пожаловать, {{ user.profile.full_name }}!</p>
 
-<div class="mt-4">
-    <h3>Ваши заявки</h3>
-    <a href="{% url 'apply' %}" class="btn btn-success"> Новая заявка</a>
-    <a href="{% url 'my_applications' %}" class="btn btn-info"> Все заявки</a>
-</div>
+<a href="{% url 'apply' %}" class="btn btn-success"> Новая заявка</a>
+<a href="{% url 'my_applications' %}" class="btn btn-info"> Мои заявки</a>
 
 {% if user.is_staff %}
-    <div class="mt-4 p-3 bg-light">
-        <h4> Админ-панель заявок</h4>
-        <a href="/superadmin/catalog/application/" class="btn btn-warning">Управление заявками</a>
+    <div class="alert alert-warning mt-4">
+        <h3>🛠️ Панель администратора</h3>
+        <ul>
+            <li><a href="{% url 'admin_applications' %}">Все заявки</a> — смена статуса</li>
+            <li><a href="{% url 'admin_categories' %}">Управление категориями</a> — добавить/удалить</li>
+        </ul>
     </div>
 {% endif %}
 {% endblock %}

@@ -1,0 +1,14 @@
+{% extends "catalog/base_generic.html" %}
+
+{% block content %}
+<h2>Удаление категории</h2>
+
+<p><strong>Вы уверены, что хотите удалить категорию «{{ object.name }}»?</strong></p>
+<p> При удалении будут удалены <strong>все заявки</strong> этой категории ({{ object.application_set.count }} шт).</p>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Да, удалить</button>
+    <a href="{% url 'admin_categories' %}" class="btn btn-secondary">Отмена</a>
+</form>
+{% endblock %}

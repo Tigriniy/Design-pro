@@ -1,0 +1,21 @@
+{% extends "catalog/base_generic.html" %}
+
+{% block content %}
+<h2>Админка: Управление категориями</h2>
+
+<a href="{% url 'admin_category_create' %}" class="btn btn-success mb-3">➕ Добавить категорию</a>
+
+{% if categories %}
+    <ul>
+    {% for cat in categories %}
+        <li>
+            <strong>{{ cat.name }}</strong> 
+            (заявок: {{ cat.application_set.count }})
+            <a href="{% url 'admin_category_delete' cat.pk %}" class="btn btn-sm btn-danger"> Удалить</a>
+        </li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>Категорий нет.</p>
+{% endif %}
+{% endblock %}

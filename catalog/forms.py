@@ -71,3 +71,12 @@ class ApplicationForm(forms.ModelForm):
             if photo.size > 2 * 1024 * 1024:
                 raise forms.ValidationError('максимальный размер файла - 2 МБ.')
         return photo
+
+
+class CategoryForm(forms.ModelForm):
+    class Meta:
+        model = Category
+        fields = ['name']
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control'})
+        }

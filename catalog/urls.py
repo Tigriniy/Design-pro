@@ -14,5 +14,13 @@ urlpatterns = [
 
     path('profile/', views.profile, name='profile'),
 
+    # только для админа, то есть is_staff
+    path('admin/applications/', views.admin_applications, name='admin_applications'),
+    path('admin/categories/', views.admin_categories, name='admin_categories'),
+    path('admin/categories/create/', views.admin_category_create, name='admin_category_create'),
+    path('admin/categories/<int:pk>/edit/', views.admin_category_edit, name='admin_category_edit'),
+    path('admin/categories/<int:pk>/delete/', views.admin_category_delete, name='admin_category_delete'),
 ]
+
+
 
