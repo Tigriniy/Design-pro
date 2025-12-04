@@ -7,7 +7,7 @@ from django.urls import reverse_lazy
 from django.contrib.auth.views import LogoutView
 from django.contrib.auth.decorators import login_required
 
-from .forms import CustomUserCreationForm, ApplicationForm
+from .forms import CustomUserCreationForm, ApplicationForm, Category
 from .models import Application
 
 
