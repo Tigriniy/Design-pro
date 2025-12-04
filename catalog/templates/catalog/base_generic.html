@@ -12,9 +12,13 @@
         <nav>
             <a href="{% url 'index' %}">Главная</a>
             {% if user.is_authenticated %}
-                {{ user.username }} | <a href="{% url 'logout' %}">Выйти</a>
+                Привет, {{ user.profile.full_name|default:user.username }}!
+                <a href="{% url 'profile' %}">Кабинет</a>
+                <a href="{% url 'apply' %}">➕ Подать заявку</a>
+                <a href="{% url 'my_applications' %}">📋 Мои заявки</a>
+                <a href="{% url 'logout' %}">Выйти</a>
             {% else %}
-                <a href="{% url 'login' %}">Войти</a> | 
+                <a href="{% url 'login' %}">Войти</a>
                 <a href="{% url 'register' %}">Регистрация</a>
             {% endif %}
         </nav>

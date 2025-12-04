@@ -1,0 +1,38 @@
+<h2>Мои заявки</h2>
+
+<!-- Фильтр по статусу -->
+<form method="get" class="mb-3">
+    <label>Фильтр по статусу:</label>
+    <select name="status" onchange="this.form.submit()">
+        <option value="">Все</option>
+        <option value="новая" {% if selected_status == 'новая' %}selected{% endif %}>Новая</option>
+        <option value="в работе" {% if selected_status == 'в работе' %}selected{% endif %}>Принято в работу</option>
+        <option value="выполнено" {% if selected_status == 'выполнено' %}selected{% endif %}>Выполнено</option>
+    </select>
+</form>
+
+{% if applications %}
+    <div class="list-group">
+    {% for app in applications %}
+        <div class="list-group-item">
+            <h5>{{ app.title }}</h5>
+            <p><small class="text-muted">{{ app.created_at|date:"d.m.Y H:i" }}</small></p>
+            <p>{{ app.description|truncatewords:20 }}</p>
+            <p><strong>Категория:</strong> {{ app.category }}</p>
+            <p><strong>Статус:</strong>
+                <span class="badge bg-{{ app.status == 'выполнено'|yesno:'success,warning,info' }}">
+                    {{ app.get_status_display }}
+                </span>
+            </p>
+            {% if app.photo %}
+                <img src="{{ app.photo.url }}" alt="Фото" width="100" class="img-thumbnail mb-2">
+            {% endif %}
+            {% if app.status == 'новая' %}
+                <a href="{% url 'application_delete' app.pk %}" class="btn btn-sm btn-danger">Удалить</a>
+            {% endif %}
+        </div>
+    {% endfor %}
+    </div>
+{% else %}
+    <p>Заявок нет.</p>
+{% endif %}

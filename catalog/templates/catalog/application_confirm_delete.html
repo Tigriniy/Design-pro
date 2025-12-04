@@ -1,0 +1,9 @@
+<h2>Подтверждение удаления</h2>
+<p>Вы уверены, что хотите удалить заявку <strong>«{{ object.title }}»</strong>?</p>
+<p><em>Удалить можно только заявки со статусом «Новая».</em></p>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Да, удалить</button>
+    <a href="{% url 'my_applications' %}" class="btn btn-secondary">Отмена</a>
+</form>

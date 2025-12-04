@@ -1,18 +1,49 @@
 {% extends "catalog/base_generic.html" %}
 
 {% block content %}
-<h2>Design.pro</h2>
-<p>Студия дизайна интерьеров.</p>
-
-<div class="feature-card">
-    <ul>
-        <li>Создание заявок</li>
-        <li>Просмотр работ</li>
-        <li>Профессиональные дизайнеры</li>
-    </ul>
+<div class="hero">
+    <h1>Design.pro</h1>
+    <p class="subtitle">Профессиональный дизайн интерьера под ваш стиль и задачи</p>
 </div>
 
-{% if not user.is_authenticated %}
-    <p><a href="{% url 'register' %}" class="btn">Регистрация</a></p>
-{% endif %}
+<div class="features">
+    <div class="feature-card">
+        <h3>Что мы предлагаем</h3>
+        <ul>
+            <li> Проектирование жилых и коммерческих помещений</li>
+            <li> 3D-визуализация интерьера</li>
+            <li> Подбор мебели и материалов</li>
+        </ul>
+    </div>
+
+    <div class="feature-card">
+        <h3>Как это работает</h3>
+        <ol>
+            <li>Подайте заявку онлайн</li>
+            <li>Прикрепите фото/план помещения</li>
+            <li>Дизайнер свяжется с вами</li>
+            <li>Получите готовый проект </li>
+        </ol>
+    </div>
+</div>
+
+<div class="cta-section">
+    {% if user.is_authenticated %}
+        <div class="alert alert-success">
+             Привет, <strong>{{ user.profile.full_name|default:user.username }}</strong>!
+        </div>
+        <p>
+            <a href="{% url 'apply' %}" class="btn btn-primary btn-lg"> Подать заявку</a>
+            <a href="{% url 'my_applications' %}" class="btn btn-outline-secondary btn-lg">📋 Мои заявки</a>
+        </p>
+    {% else %}
+        <div class="alert alert-info">
+             Чтобы подать заявку, нужно <strong>войти</strong> или <strong>зарегистрироваться</strong>.
+        </div>
+        <p>
+            <a href="{% url 'login' %}" class="btn btn-outline-primary">Войти</a>
+            <a href="{% url 'register' %}" class="btn btn-primary">Регистрация</a>
+        </p>
+    {% endif %}
+</div>
 {% endblock %}

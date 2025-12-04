@@ -1,8 +1,14 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
-from .forms import CustomUserCreationForm
+from django.views.generic import CreateView, ListView, DeleteView
+from django.urls import reverse_lazy
+from django.contrib.auth.views import LogoutView
+from django.contrib.auth.decorators import login_required
 
+from .forms import CustomUserCreationForm, ApplicationForm
+from .models import Application
 
 
 def index(request):
@@ -44,3 +50,52 @@ def user_login(request):
     else:
         form = AuthenticationForm()
     return render(request, 'catalog/login.html', {'form': form})
+
+
+
+@login_required
+def profile(request):
+    return render(request, 'catalog/profile.html')
+
+class ApplicationCreateView(LoginRequiredMixin, CreateView):
+    model = Application
+    form_class = ApplicationForm
+    template_name = 'catalog/application_create.html'
+    success_url = reverse_lazy('my_applications')
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        form.instance.status = 'новая'
+        return super().form_valid(form)
+
+
+class ApplicationListView(LoginRequiredMixin, ListView):
+    model = Application
+    template_name = 'catalog/application_list.html'
+    context_object_name = 'applications'
+
+    def get_queryset(self):
+        qs = Application.objects.filter(user=self.request.user)
+        status = self.request.GET.get('status')
+        if status in ['новая', 'в работе', 'выполнено']:
+            qs = qs.filter(status=status)
+        return qs
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['categories'] = Category.objects.all()
+        context['selected_status'] = self.request.GET.get('status', '')
+        return context
+
+
+class ApplicationDeleteView(LoginRequiredMixin, DeleteView):
+    model = Application
+    template_name = 'catalog/application_confirm_delete.html'
+    success_url = reverse_lazy('my_applications')
+
+    def get_queryset(self):
+
+        return Application.objects.filter(
+            user=self.request.user,
+            status='новая'
+        )
