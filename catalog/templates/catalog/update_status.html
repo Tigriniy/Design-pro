@@ -1,0 +1,47 @@
+{% extends "catalog/base_generic.html" %}
+
+{% block content %}
+<h2>Смена статуса заявки</h2>
+<p><strong>Заявка:</strong> {{ application.title }} ({{ application.get_status_display }})</p>
+<p><strong>Автор:</strong> {{ application.user.profile.full_name|default:application.user.username }}</p>
+
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="mb-3">
+        <label class="form-label">{{ form.status.label }}</label>
+        {{ form.status }}
+        {% if form.status.errors %}<div class="text-danger">{{ form.status.errors }}</div>{% endif %}
+    </div>
+
+    <div class="mb-3" id="comment-field" style="display:none;">
+        <label class="form-label">{{ form.comment.label }}</label>
+        {{ form.comment }}
+        {% if form.comment.errors %}<div class="text-danger">{{ form.comment.errors }}</div>{% endif %}
+    </div>
+
+    <div class="mb-3" id="design-field" style="display:none;">
+        <label class="form-label">{{ form.design_image.label }}</label>
+        {{ form.design_image }}
+        {% if form.design_image.errors %}<div class="text-danger">{{ form.design_image.errors }}</div>{% endif %}
+    </div>
+
+    <button type="submit" class="btn btn-primary">Сохранить статус</button>
+    <a href="{% url 'admin_applications' %}" class="btn btn-secondary">Отмена</a>
+</form>
+
+<script>
+document.getElementById('id_status').addEventListener('change', function() {
+    const commentField = document.getElementById('comment-field');
+    const designField = document.getElementById('design-field');
+    const value = this.value;
+
+    commentField.style.display = value === 'в работе' ? 'block' : 'none';
+    designField.style.display = value === 'выполнено' ? 'block' : 'none';
+});
+// При загрузке — скрыть поля (по умолчанию)
+document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('comment-field').style.display = 'none';
+    document.getElementById('design-field').style.display = 'none';
+});
+</script>
+{% endblock %}

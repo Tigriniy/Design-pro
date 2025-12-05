@@ -185,3 +185,50 @@ class CategoryForm(forms.ModelForm):
                 raise forms.ValidationError('Категория с таким названием уже существует.')
 
         return name
+
+class StatusUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Application
+        fields = ['status', 'comment', 'design_image']
+        widgets = {
+            'status': forms.Select(attrs={'class': 'form-control'}),
+            'comment': forms.Textarea(attrs={'rows': 3, 'class': 'form-control'}),
+        }
+        labels = {
+            'comment': 'Комментарий',
+            'design_image': 'Изображение дизайна',
+        }
+
+    def __init__(self, *args, **kwargs):
+        self.instance = kwargs.get('instance')
+        super().__init__(*args, **kwargs)
+
+        if self.instance and self.instance.status == 'новая':
+            self.fields['status'].choices = [
+                ('в работе', 'Принято в работу'),
+                ('выполнено', 'Выполнено'),
+            ]
+        else:
+
+            self.fields['status'].widget = forms.HiddenInput()
+            self.fields['status'].required = False
+
+    def clean(self):
+        cleaned_data = super().clean()
+        status = cleaned_data.get('status')
+        comment = cleaned_data.get('comment')
+        design_image = cleaned_data.get('design_image')
+
+        if self.instance.status != 'новая':
+            raise forms.ValidationError(
+                'смена статуса разрешена только для заявок со статусом «Новая».'
+            )
+
+        if status == 'в работе':
+            if not comment or not comment.strip():
+                self.add_error('comment', 'комментарий обязателен при переводе в «принято в работу».')
+        elif status == 'выполнено':
+            if not design_image:
+                self.add_error('design_image', 'изображение дизайна обязательно при переводе в «выполнено».')
+
+        return cleaned_data

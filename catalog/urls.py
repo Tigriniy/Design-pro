@@ -11,6 +11,7 @@ urlpatterns = [
     path('apply/', views.ApplicationCreateView.as_view(), name='apply'),
     path('my-applications/', views.ApplicationListView.as_view(), name='my_applications'),
     path('applications/<int:pk>/delete/', views.ApplicationDeleteView.as_view(), name='application_delete'),
+    path('admin/applications/<int:pk>/update-status/', views.update_status, name='update_status'),
 
     path('profile/', views.profile, name='profile'),
 

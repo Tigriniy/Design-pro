@@ -1,3 +1,5 @@
+from tabnanny import verbose
+
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
@@ -68,6 +70,19 @@ class Application(models.Model):
         verbose_name='фото/план помещения'
     )
 
+    comment = models.TextField(
+        blank=True,
+        null=True,
+        verbose_name='комментарий (при переводе в "принято в работу")'
+    )
+    design_image = models.ImageField(
+        upload_to='designs/',
+        blank=True,
+        null=True,
+        verbose_name='изображение дизайна (при переводе в  "Выполнено")'
+
+
+    )
     status = models.CharField(
         max_length=20,
         choices=STATUS_CHOICES,

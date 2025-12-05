@@ -6,7 +6,7 @@ from django.contrib import messages
 from django.views.generic import CreateView, ListView, DeleteView
 from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required, user_passes_test
-from .forms import CategoryForm
+from .forms import CategoryForm, StatusUpdateForm
 
 from .forms import CustomUserCreationForm, ApplicationForm, Category
 from .models import Application
@@ -184,3 +184,24 @@ def admin_category_delete(request, pk):
         messages.success(request, f'Категория «{name}» и {count} заявок удалены')
         return redirect('admin_categories')
     return render(request, 'catalog/admin_category_confirm_delete.html', {'object': category})
+
+def is_admin(user):
+    return user.is_staff
+
+@user_passes_test(is_admin)
+def update_status(request, pk):
+    app = get_object_or_404(Application, pk=pk)
+
+    if request.method == 'POST':
+        form = StatusUpdateForm(request.POST, request.FILES, instance=app)
+        if form.is_valid():
+            form.save()
+            messages.success(request, f'Статус заявки «{app.title}» изменён на «{app.get_status_display()}».')
+            return redirect('admin_applications')
+    else:
+        form = StatusUpdateForm(instance=app)
+
+    return render(request, 'catalog/update_status.html', {
+        'form': form,
+        'application': app,
+    })

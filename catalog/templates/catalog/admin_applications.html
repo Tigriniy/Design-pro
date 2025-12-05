@@ -26,22 +26,9 @@
             <p>{{ app.description|truncatewords:20 }}</p>
             
             {% if app.status == 'новая' %}
-            <form method="post" style="display:inline;">
-                {% csrf_token %}
-                <input type="hidden" name="app_id" value="{{ app.id }}">
-                <input type="hidden" name="status" value="в работе">
-                <input type="hidden" name="action" value="change_status">
-                <button type="submit" class="btn btn-sm btn-warning">Принять в работу</button>
-            </form>
-            {% elif app.status == 'в работе' %}
-
-            <form method="post" style="display:inline;">
-                {% csrf_token %}
-                <input type="hidden" name="app_id" value="{{ app.id }}">
-                <input type="hidden" name="status" value="выполнено">
-                <input type="hidden" name="action" value="change_status">
-                <button type="submit" class="btn btn-sm btn-success">Выполнить</button>
-            </form>
+                <a href="{% url 'update_status' app.pk %}" class="btn btn-sm btn-outline-primary"> Изменить статус</a>
+            {% else %}
+                <span class="text-muted">Статус нельзя изменить</span>
             {% endif %}
         </div>
     {% endfor %}
