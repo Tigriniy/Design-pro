@@ -15,7 +15,16 @@ from .models import Application
 
 
 def index(request):
-    return render(request, 'catalog/index.html')
+    completed_applications = Application.objects.filter(
+        status='выполнено'
+    ).select_related('category').order_by('-created_at')[:4]
+
+    in_progress_count = Application.objects.filter(status='в работе').count()
+
+    return render(request, 'catalog/index.html', {
+        'completed_applications': completed_applications,
+        'in_progress_count': in_progress_count,
+    })
 
 
 def register(request):

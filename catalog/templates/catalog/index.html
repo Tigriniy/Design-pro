@@ -6,6 +6,40 @@
     <p class="subtitle">Профессиональный дизайн интерьера под ваш стиль и задачи</p>
 </div>
 
+
+<div class="alert alert-warning text-center">
+    <strong>В работе:</strong> {{ in_progress_count }} заявок
+</div>
+
+
+{% if completed_applications %}
+    <h2>Последние выполненные проекты</h2>
+    <div class="completed-list">
+    {% for app in completed_applications %}
+        <div class="application-preview">
+            {% if app.photo %}
+                <div class="application-photo">
+                    <img src="{{ app.photo.url }}" alt="{{ app.title }}">
+                </div>
+            {% endif %}
+
+            <div class="application-info">
+                <h3>{{ app.title }}</h3>
+                <p class="meta">
+                    <span class="date">{{ app.created_at|date:"d.m.Y" }}</span><br>
+                    <span class="category">Категория: {{ app.category }}</span>
+                </p>
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+{% else %}
+    <div class="alert alert-info">
+        Выполненных заявок пока нет.
+    </div>
+{% endif %}
+
+
 <div class="features">
     <div class="feature-card">
         <h3>Что мы предлагаем</h3>
@@ -15,35 +49,21 @@
             <li> Подбор мебели и материалов</li>
         </ul>
     </div>
-
-    <div class="feature-card">
-        <h3>Как это работает</h3>
-        <ol>
-            <li>Подайте заявку онлайн</li>
-            <li>Прикрепите фото/план помещения</li>
-            <li>Дизайнер свяжется с вами</li>
-            <li>Получите готовый проект </li>
-        </ol>
-    </div>
 </div>
 
 <div class="cta-section">
     {% if user.is_authenticated %}
-        <div class="alert alert-success">
-             Привет, <strong>{{ user.profile.full_name|default:user.username }}</strong>!
-        </div>
         <p>
-            <a href="{% url 'apply' %}" class="btn btn-primary btn-lg"> Подать заявку</a>
-            <a href="{% url 'my_applications' %}" class="btn btn-outline-secondary btn-lg">📋 Мои заявки</a>
+            <a href="{% url 'apply' %}" class="btn btn-success"> Подать заявку</a>
+            <a href="{% url 'my_applications' %}" class="btn btn-info"> Мои заявки</a>
         </p>
     {% else %}
         <div class="alert alert-info">
-             Чтобы подать заявку, нужно <strong>войти</strong> или <strong>зарегистрироваться</strong>.
+             Чтобы подать заявку, нужно
+            <strong><a href="{% url 'login' %}">войти</a></strong>
+            или
+            <strong><a href="{% url 'register' %}">зарегистрироваться</a></strong>.
         </div>
-        <p>
-            <a href="{% url 'login' %}" class="btn btn-outline-primary">Войти</a>
-            <a href="{% url 'register' %}" class="btn btn-primary">Регистрация</a>
-        </p>
     {% endif %}
 </div>
 {% endblock %}
