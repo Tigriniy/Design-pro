@@ -130,6 +130,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 
+
 LOGIN_URL = '/accounts/login/'  # куда перенаправлять если не авторизован
 LOGIN_REDIRECT_URL = '/'        # куда идти после успешного входа
 LOGOUT_REDIRECT_URL = '/'       # куда идти после выхода
