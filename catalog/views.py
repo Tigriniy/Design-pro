@@ -1,4 +1,3 @@
-from gc import get_objects
 
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login
@@ -6,7 +5,6 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.views.generic import CreateView, ListView, DeleteView
 from django.urls import reverse_lazy
-from django.contrib.auth.views import LogoutView
 from django.contrib.auth.decorators import login_required, user_passes_test
 from .forms import CategoryForm
 
