@@ -1,0 +1,171 @@
+
+
+.reg-in-cont{
+	width: 100vw;
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+.reg-in-cont img{
+	width: 85px;
+	height: 85px;
+	object-fit: cover;
+}
+.reg-in_block{
+	width: 450px;
+	min-height: 400px;
+	background-color: #1F1F1F;
+	border-radius: 6px;
+	margin-top: 15px;
+	border: 1px solid #333333;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding-bottom: 20px;
+}
+.reg-in_block h2{
+	font-size: 24px;
+	margin-top: 20px;
+}
+.reg-in_block p{
+	font-size: 13px;
+	color: grey;
+	margin-top: 20px;
+}
+
+
+.reg_and_log{
+	width: 80%;
+	height: 38px;
+	background-color: #333333;
+	border-radius: 6px;
+	margin-top: 20px;
+	display: flex;
+}
+.reg_and_log_reg{
+	width: 50%;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 14px;
+}
+.reg_and_log_reg a{
+	font-size: 14px;
+}
+.reg_and_log_reg span{
+	color: #999999;
+	font-size: 14px;;
+}
+.reg_and_log_log{
+	width: 50%;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: 6px;
+	font-size: 14px;
+}
+.reg_and_log_log span{
+	background-color: #1A1A1A;
+	padding: 5px 30px 5px 30px;
+	border-radius: 6px;
+	font-size: 14px;
+}
+
+#reg_and_log_reg_span{
+	background-color: #1A1A1A;
+	padding: 5px 60px 5px 60px;
+	border-radius: 6px;
+}
+
+.reg_and_log_log span a{
+	font-size: 14px;
+}
+
+
+
+
+.reg-in-form{
+	width: 80%;
+	min-height: 100px;
+/*	border: 1px solid black;*/
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	margin-top: 15px;
+}
+
+.reg-in-form label{
+	font-size: 14px;
+}
+.reg-in-form input{
+	width: 100%;
+	height: 24px;
+	font-size: 14px;
+	border-radius: 6px;
+	background-color: #1A1A1A;
+	border: 1px solid #333333;
+	padding: 5px 0px 5px 10px;
+}
+
+
+.reg-in-form button{
+	background: linear-gradient(#FF8D44, #FFA867);
+	border-radius: 6px;
+	width: 100%;
+	height: 34px;
+	border: none;
+	margin-top: 10px;
+}
+.reg-in-form button:hover{
+	opacity: 0.7;
+	cursor: pointer;
+}
+
+.reg_and_log_alt{
+	width: 80%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 10px;
+}
+.reg_and_log_alt button{
+	width: 190px;
+	height: 40px;
+	background-color: #1A1A1A;
+	border: 1px solid #333333;
+	border-radius: 6px;
+	margin-top: 15px;
+	cursor: pointer;
+}
+
+.reg_and_log_alt button:hover{
+	opacity: 0.7;
+}
+.log_or_reg{
+	color: grey;
+	margin-top: 20px;
+}
+
+#forgot_pass{
+	text-align: center;
+	color: #CD4069;
+}
+#log_but{
+	background: linear-gradient(#FF4F90, #FF69A4);
+}
+
+@media (max-width: 768px) {
+	.reg-in_block{
+		width: 90%;
+	}
+
+
+}
+
+a{
+	text-decoration: none;
+}

@@ -1,0 +1,154 @@
+.delivery__container {
+  width: 85%;
+  max-width: 1920px;
+  margin: 0 auto;
+  padding: 120px 0;
+}
+
+.delivery__hero {
+  text-align: center;
+  margin-bottom: 80px;
+}
+
+.delivery__title {
+  font-size: 60px;
+  margin-bottom: 16px;
+}
+
+.delivery__subtitle {
+  font-size: 32px;
+  color: #aaaaaa;
+}
+
+.delivery__section-title {
+  font-size: 48px;
+  text-align: center;
+  margin: 80px 0 60px;
+}
+
+.delivery__methods {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 80px;
+  margin-bottom: 100px;
+}
+
+.delivery-method {
+  background-color: #1F1F1F;
+  border-radius: 12px;
+  padding: 40px 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  height: 100%;
+}
+
+.delivery-method__title {
+  font-size: 32px;
+  margin: 10px 0;
+}
+
+.delivery-method__text {
+  font-size: 20px;
+  color: #aaaaaa;
+  line-height: 1.5;
+}
+
+.delivery-method__price {
+  font-size: 36px;
+  color: #FF4F90;
+  font-weight: 600;
+}
+
+.delivery__terms {
+  background-color: #1F1F1F;
+  border-radius: 12px;
+  padding: 50px 60px;
+  margin-bottom: 100px;
+}
+
+.delivery__terms-title {
+  font-size: 36px;
+  margin-bottom: 30px;
+}
+
+.delivery__terms-list {
+  list-style: none;
+  font-size: 24px;
+  line-height: 2;
+  color: #ffffff;
+}
+
+.delivery__terms-list li::before {
+  content: "• ";
+  color: #FF4F90;
+  font-weight: bold;
+}
+
+.delivery__payment {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 60px;
+  margin-bottom: 100px;
+}
+
+.payment-card {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+}
+
+.payment-card__title {
+  font-size: 28px;
+}
+
+.payment-card__text {
+  font-size: 20px;
+  color: #aaaaaa;
+}
+
+/* === АДАПТИВ = */
+@media (max-width: 1024px) {
+  .delivery__methods,
+  .delivery__payment {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px;
+  }
+
+  .delivery__title { font-size: 48px; }
+  .delivery__subtitle { font-size: 26px; }
+  .delivery__section-title { font-size: 40px; }
+}
+
+@media (max-width: 768px) {
+  .delivery__container { width: 95%; }
+  .delivery__hero { margin-bottom: 60px; }
+  .delivery__title { font-size: 36px; }
+  .delivery__subtitle { font-size: 22px; }
+  .delivery__section-title { font-size: 32px; margin: 60px 0 40px; }
+
+  .delivery__methods,
+  .delivery__payment {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
+  .delivery-method,
+  .payment-card { padding: 30px 20px; }
+
+  .delivery__terms { padding: 40px 30px; }
+  .delivery__terms-list { font-size: 20px; }
+}
+
+@media (max-width: 480px) {
+  .delivery__title { font-size: 32px; }
+  .delivery__subtitle { font-size: 18px; }
+  .delivery__section-title { font-size: 28px; }
+  .delivery-method__title,
+  .payment-card__title { font-size: 24px; }
+  .delivery-method__price { font-size: 30px; }
+}

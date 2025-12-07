@@ -1,0 +1,123 @@
+
+  .epilogue{
+  font-family: "Epilogue", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: <weight>;
+  font-style: normal;
+}
+
+.inter{
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: <weight>;
+  font-style: normal;
+}
+
+*{
+	padding: 0;
+	margin: 0;
+	color: white;
+	font-family: "Epilogue", sans-serif;
+}
+
+body{
+	background-color: #121212;
+
+}
+
+.page-container {
+  width: 100%;
+  max-width: 1920px;
+  margin: 0 auto;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+
+
+
+
+@media (max-width: 1024px) {
+  .content-wrapper {
+    width: 90%;
+  }
+}
+
+@media (max-width: 768px) {
+  .content-wrapper {
+    width: 100%;
+    padding: 0 20px;
+  }
+}
+
+/* ==== СОСТОЯНИЯ ДЛЯ КНОПОК ==== */
+button,
+.btn,
+.hero__button,
+.product__action-btn,
+.product__action-btn--primary,
+.call-btn,
+.contacts-form__button,
+.social-btn,
+.footer__subscribe button,
+.auth__button {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+/* подъем и тень */
+button:hover,
+.btn:hover,
+.hero__button:hover,
+.product__action-btn:hover,
+.call-btn:hover,
+.contacts-form__button:hover,
+.social-btn:hover,
+.footer__subscribe button:hover,
+.auth__button:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 25px rgba(255, 79, 144, 0.35);
+  filter: brightness(1.08);
+}
+
+/* нажатие вниз */
+button:active,
+.btn:active,
+.hero__button:active,
+.product__action-btn:active,
+.call-btn:active,
+.contacts-form__button:active,
+.social-btn:active,
+.footer__subscribe button:active,
+.auth__button:active {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(255, 79, 144, 0.4);
+  filter: brightness(0.95);
+}
+
+button:focus-visible,
+.btn:focus-visible,
+.hero__button:focus-visible,
+.product__action-btn:focus-visible,
+.call-btn:focus-visible,
+.contacts-form__button:focus-visible,
+.social-btn:focus-visible,
+.footer__subscribe button:focus-visible,
+.auth__button:focus-visible {
+  outline: 3px solid #FF4F90;
+  outline-offset: 4px;
+}
+
+/* отключение */
+button:disabled,
+button[disabled],
+.btn:disabled,
+.btn[disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none !important;
+  box-shadow: none !important;
+  filter: none !important;
+}
+
